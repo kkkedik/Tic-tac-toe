@@ -26,10 +26,8 @@ public class Computer implements Player {
     public Pair<Integer, Integer> getNextStep(Board board) {
         if (board.isCellEmpty(1, 1)) {
             return new ImmutablePair<>(1, 1);
-        } else if (board.isCellEmpty(0, 0)) {
-            return new ImmutablePair<>(0, 0);
         } else {
-            return board.checkWinStep('X', '0');
+            return board.checkWinStep('O', 'X');
         }
     }
 
