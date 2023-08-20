@@ -8,19 +8,29 @@ import java.util.Random;
 
 public class Computer implements Player {
 
-    @Override
-    public Pair<Integer, Integer> getNextStep(Board board) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board.isCellEmpty(i, j)) {
-                    return new ImmutablePair<>(i, j);
-                }
-            }
+//    @Override
+//    public Pair<Integer, Integer> getNextStep(Board board) {
+//        for (int i = 0; i < 3; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                if (board.isCellEmpty(i, j)) {
+//                    return new ImmutablePair<>(i, j);
+//                }
+//            }
+//
+//        }
+//        throw new RuntimeException();
+////        Random random = new Random();
+////        return new ImmutablePair<>(random.nextInt(2), random.nextInt(2));
+//    }
 
+    public Pair<Integer, Integer> getNextStep(Board board) {
+        if (board.isCellEmpty(1, 1)) {
+            return new ImmutablePair<>(1, 1);
+        } else if (board.isCellEmpty(0, 0)) {
+            return new ImmutablePair<>(0, 0);
+        } else {
+            return board.checkWinStep('X', '0');
         }
-        throw new RuntimeException();
-//        Random random = new Random();
-//        return new ImmutablePair<>(random.nextInt(2), random.nextInt(2));
     }
 
     @Override

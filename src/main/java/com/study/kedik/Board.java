@@ -1,5 +1,8 @@
 package com.study.kedik;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.Arrays;
 
 public class Board {
@@ -20,6 +23,7 @@ public class Board {
             }
             System.out.println();
         }
+
     }
 
 //    public void printBoard() {
@@ -70,6 +74,119 @@ public class Board {
         if (containsEmptyCells) return GameStatus.IN_GAME;
         App.mainMenu();
         return GameStatus.DRAW;
+    }
+
+    public Pair<Integer, Integer> checkWinStep(char symbol1, char symbol2) {
+        for (int i = 0; i < 3; i++) {
+            if (board[0][i] == symbol1 && board[2][i] == symbol1 ||
+                    board[0][i] == symbol1 && board[1][i] == symbol1 ||
+                    board[1][i] == symbol1 && board[2][i] == symbol1) {
+                if (isCellEmpty(i, 0)) {
+                    return new ImmutablePair<>(i, 0);
+                } else if (isCellEmpty(i, 1)) {
+                    return new ImmutablePair<>(i, 1);
+                } else if (isCellEmpty(i, 2)) {
+                    return new ImmutablePair<>(i, 2);
+                }
+            }
+        }
+        for (int j = 0; j < 3; j++) {
+            if (board[j][0] == symbol1 && board[j][2] == symbol1 ||
+                    board[j][0] == symbol1 && board[j][1] == symbol1 ||
+                    board[j][1] == symbol1 && board[j][2] == symbol1) {
+                if (isCellEmpty(0, j)) {
+                    return new ImmutablePair<>(0, j);
+                } else if (isCellEmpty(1, j)) {
+                    return new ImmutablePair<>(1, j);
+                } else if (isCellEmpty(2, j)) {
+                    return new ImmutablePair<>(2, j);
+                }
+            }
+        }
+        if (board[0][0] == symbol1 && board[2][2] == symbol1 ||
+                board[0][0] == symbol1 && board[1][1] == symbol1 ||
+                board[1][1] == symbol1 && board[2][2] == symbol1) {
+            if (isCellEmpty(1, 1)) {
+                return new ImmutablePair<>(1, 1);
+            } else if (isCellEmpty(0, 0)) {
+                return new ImmutablePair<>(0, 0);
+            } else if (isCellEmpty(2, 2)) {
+                return new ImmutablePair<>(2, 2);
+            }
+        }
+        if (board[0][2] == symbol1 && board[2][0] == symbol1 ||
+                board[0][2] == symbol1 && board[1][1] == symbol1 ||
+                board[1][1] == symbol1 && board[2][0] == symbol1) {
+            if (isCellEmpty(1, 1)) {
+                return new ImmutablePair<>(1, 1);
+            } else if (isCellEmpty(0, 2)) {
+                return new ImmutablePair<>(0, 2);
+            } else if (isCellEmpty(2, 0)) {
+                return new ImmutablePair<>(2, 0);
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            if (board[0][i] == symbol2 && board[2][i] == symbol2 ||
+                    board[0][i] == symbol2 && board[1][i] == symbol2 ||
+                    board[1][i] == symbol2 && board[2][i] == symbol2) {
+                if (isCellEmpty(i, 0)) {
+                    return new ImmutablePair<>(i, 0);
+                } else if (isCellEmpty(i, 1)) {
+                    return new ImmutablePair<>(i, 1);
+                } else if (isCellEmpty(i, 2)) {
+                    return new ImmutablePair<>(i, 2);
+                }
+            }
+        }
+        for (int j = 0; j < 3; j++) {
+            if (board[j][0] == symbol2 && board[j][2] == symbol2 ||
+                    board[j][0] == symbol2 && board[j][1] == symbol2 ||
+                    board[j][1] == symbol2 && board[j][2] == symbol2) {
+                if (isCellEmpty(0, j)) {
+                    return new ImmutablePair<>(0, j);
+                } else if (isCellEmpty(1, j)) {
+                    return new ImmutablePair<>(1, j);
+                } else if (isCellEmpty(2, j)) {
+                    return new ImmutablePair<>(2, j);
+                }
+            }
+        }
+        if (board[0][0] == symbol2 && board[2][2] == symbol2 ||
+                board[0][0] == symbol2 && board[1][1] == symbol2 ||
+                board[1][1] == symbol2 && board[2][2] == symbol2) {
+            if (isCellEmpty(1, 1)) {
+                return new ImmutablePair<>(1, 1);
+            } else if (isCellEmpty(0, 0)) {
+                return new ImmutablePair<>(0, 0);
+            } else if (isCellEmpty(2, 2)) {
+                return new ImmutablePair<>(2, 2);
+            }
+        }
+        if (board[0][2] == symbol2 && board[2][0] == symbol2 ||
+                board[0][2] == symbol2 && board[1][1] == symbol2 ||
+                board[1][1] == symbol2 && board[2][0] == symbol2) {
+            if (isCellEmpty(1, 1)) {
+                return new ImmutablePair<>(1, 1);
+            } else if (isCellEmpty(0, 2)) {
+                return new ImmutablePair<>(0, 2);
+            } else if (isCellEmpty(2, 0)) {
+                return new ImmutablePair<>(2, 0);
+            }
+        }
+
+        for (int j = 0; j < 3; j++) {
+            if (board[0][j] == 'O' && board[2][j] == 'O') {
+                if (isCellEmpty(1, j)) {
+                    return new ImmutablePair<>(1, j);
+                }
+            }
+        }
+        if (board[1][1] == '0') {
+            return new ImmutablePair<>(0, 1);
+        } else if (board[0][0] == '0') {
+            return new ImmutablePair<>(0, 1);
+        }
+        return new ImmutablePair<>(2, 2);
     }
 
     public boolean isCellEmpty(int x, int y) {
