@@ -13,19 +13,17 @@ public class App {
     }
 
     public static void mainMenu() {
-        boolean invalidInput = true;
-        while (invalidInput) {
+
+        while (true) {
             System.out.println("Выберите режим игры: \n1. Игра против компьютера  \n2. Игра против игрока  \n3. Выход");
             Scanner scanner = new Scanner(System.in);
             int playerChoice = scanner.nextInt();
             switch (playerChoice) {
                 case 1: {
-                    invalidInput = false;
                     startPveGame();
                     break;
                 }
                 case 2: {
-                    invalidInput = false;
                     startPvpGame();
                     break;
                 }
@@ -36,7 +34,6 @@ public class App {
                     System.out.println("Введено неверное значение!");
                 }
             }
-            App.mainMenu();
         }
     }
 
