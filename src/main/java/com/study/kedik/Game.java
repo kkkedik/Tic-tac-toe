@@ -18,7 +18,25 @@ public class Game {
 
     private boolean makeStep(Player player) {
         System.out.println("Игрок " + player.getSymbol());
-        getPlayerStep(player);
+        int x;
+        int y;
+        boolean condition;
+        do {
+            Pair<Integer, Integer> coordinates = player.getNextStep(board);
+            x = coordinates.getLeft();
+            y = coordinates.getRight();
+            clearConsole();
+            condition = !board.isCellEmpty(x, y);
+            if (condition) {
+                System.out.println("Введите другое значение, данное поле занято");
+            }
+        } while (condition);
+        board.setCellValue(x, y, player.getSymbol());
+        board.printBoard();
+        return checkGameStatus();
+    }
+
+    public boolean checkGameStatus() {
         GameStatus gameStatus = board.getGameStatus();
         if (!gameStatus.equals(GameStatus.IN_GAME)) {
             System.out.println(gameStatus.message);
@@ -26,6 +44,7 @@ public class Game {
         }
         return true;
     }
+
 
     public void play() {
         board.printBoard();
@@ -37,25 +56,6 @@ public class Game {
                 break;
             }
         }
-    }
-
-    public void getPlayerStep(Player player) {
-        int x;
-        int y;
-        boolean condition;
-        do {
-            Pair<Integer, Integer> coordinates = player.getNextStep(board);
-            x = coordinates.getLeft();
-            y = coordinates.getRight();
-            clearConsole();
-            condition = !board.isCellEmpty(x, y);
-               if (condition){
-                   System.out.println("Введите другое значение, данное поле занято");
-               }
-
-        } while (condition);
-        board.setCellValue(x, y, player.getSymbol());
-        board.printBoard();
     }
 
     public static void clearConsole() {

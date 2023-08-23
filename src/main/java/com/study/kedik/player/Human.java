@@ -39,26 +39,6 @@ public class Human implements Player {
 
     @Override
     public char getSymbol() {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Выберите каким символом вы желаете играть:");
-//        System.out.println("1. X");
-//        System.out.println("2. O");
-//        int playerChoice = scanner.nextInt();
-//        switch (playerChoice) {
-//            case 1: {
-//                symbol = 'X';
-//                break;
-//            }
-//            case 2: {
-//                symbol = 'O';
-//                break;
-//            }
-//            default: {
-//                System.out.println("Введено неверное значение!");
-//                getSymbol();
-//            }
-//
-//        }
         return symbol;
     }
 }
