@@ -38,21 +38,24 @@ public class Computer implements Player {
         return null;
     }
 
-    public Pair<Integer, Integer> checkDiagonalStep(Board board, char symbol) {
+    public Pair<Integer, Integer> checkDiagonalStep(Board board, int diagonal, char symbol) {
+        if (diagonal == 0) {
+            for (int i = 0; i < 3; i++) {
+                if (checkStep(board, (i + 2) % 3, (i + 2) % 3, (i + 1) % 3, (i + 1) % 3, i, i, symbol)) {
+                    return new ImmutablePair<>(i, i);
+                }
+            }
+        } else {
+            if (checkStep(board, 2, 0, 1, 1, 0, 2, symbol)) {
+                return new ImmutablePair<>(0, 2);
+            }
 
-        for (int i = 0; i < 3; i++) {
-            if (checkStep(board, (i + 2) % 3, (i + 2) % 3, (i + 1) % 3, (i + 1) % 3, i, i, symbol)) {
-                return new ImmutablePair<>(i, i);
+            if (checkStep(board, 0, 2, 1, 1, 2, 0, symbol)) {
+                return new ImmutablePair<>(2, 0);
             }
-            if (i == 0) {
-                if (checkStep(board, (i + 2) % 3, i, 1, 1, i, (i + 2) % 3, symbol)) {
-                    return new ImmutablePair<>(i, (i + 2) % 3);
-                }
-            }
-            if (i == 2) {
-                if (checkStep(board, i, (i + 2) % 3, 1, 1, (i + 2) % 3, i, symbol)) {
-                    return new ImmutablePair<>(i, (i + 2) % 3);
-                }
+
+            if (checkStep(board, 0, 2, 2, 0, 1, 1, symbol)) {
+                return new ImmutablePair<>(1, 1);
             }
         }
         return null;
@@ -74,11 +77,12 @@ public class Computer implements Player {
             }
         }
 
-        pair = checkDiagonalStep(board, 'O');
-        if (pair != null) {
-            return pair;
+        for (int i = 0; i < 2; i++) {
+            pair = checkDiagonalStep(board, i, 'O');
+            if (pair != null) {
+                return pair;
+            }
         }
-
         //Х
 
         for (int i = 0; i < 3; i++) {
@@ -94,17 +98,19 @@ public class Computer implements Player {
             }
         }
 
-        pair = checkDiagonalStep(board, 'X');
-        if (pair != null) {
-            return pair;
+        for (int i = 0; i < 2; i++) {
+            pair = checkDiagonalStep(board, i, 'X');
+            if (pair != null) {
+                return pair;
+            }
         }
 
 
         if (board.isCellEmpty(0, 1)) {
             return new ImmutablePair<>(0, 1);
         }
-        if (board.isCellEmpty(2, 0)) {
-            return new ImmutablePair<>(2, 0);
+        if (board.isCellEmpty(0, 2)) {
+            return new ImmutablePair<>(0, 2);
         }
         if (board.isCellEmpty(2, 2)) {
             return new ImmutablePair<>(2, 2);
