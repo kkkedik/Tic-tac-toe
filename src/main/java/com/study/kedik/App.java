@@ -4,20 +4,18 @@ package com.study.kedik;
 import com.study.kedik.player.Computer;
 import com.study.kedik.player.Human;
 import com.study.kedik.player.Player;
+import com.study.kedik.utils.IOUtils;
 
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-            mainMenu();
+        mainMenu();
     }
 
     public static void mainMenu() {
-
         while (true) {
-            System.out.println("Выберите режим игры: \n1. Игра против компьютера  \n2. Игра против игрока  \n3. Выход");
-            Scanner scanner = new Scanner(System.in);
-            int playerChoice = scanner.nextInt();
+            int playerChoice = IOUtils.getUserInt("Выберите режим игры: \n1. Игра против компьютера  \n2. Игра против игрока  \n3. Выход");
             switch (playerChoice) {
                 case 1: {
                     startPveGame();

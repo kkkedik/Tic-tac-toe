@@ -48,14 +48,7 @@ public class Game {
 
     public void play() {
         board.printBoard();
-        while (true) {
-            if (!makeStep(firstPlayer)) {
-                break;
-            }
-            if (!makeStep(secondPlayer)) {
-                break;
-            }
-        }
+        while (makeStep(firstPlayer) && makeStep(secondPlayer));
     }
 
     public static void clearConsole() {

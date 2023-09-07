@@ -1,6 +1,7 @@
 package com.study.kedik.player;
 
 import com.study.kedik.Board;
+import com.study.kedik.utils.IOUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;;
 
@@ -20,21 +21,17 @@ public class Human implements Player {
     }
 
     private int getCoordinate(String direction) {
-        Scanner scanner = new Scanner(System.in);
-        boolean validInput = false;
-        int stepChoice = 0;
-        while (!validInput) {
-            System.out.println("Введите координату по " + direction + ": ");
-            stepChoice = scanner.nextInt();
-            validInput = true;
+        int stepChoice;
+        while (true) {
+            stepChoice = IOUtils.getUserInt("Введите координату по " + direction + ": ");
             if (stepChoice < 1 || stepChoice > 3) {
                 System.out.println("Введено неверное значение");
-                validInput = false;
+            } else {
+                break;
             }
         }
         return stepChoice - 1;
     }
-
 
 
     @Override
