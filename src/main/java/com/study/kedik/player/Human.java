@@ -16,7 +16,7 @@ public class Human implements Player {
     }
 
     @Override
-    public Pair<Integer, Integer> getNextStep(Board board) {
+    public Pair<Integer, Integer> getNextStep(Board board, int stepCount) {
         return new ImmutablePair<>(getCoordinate("горизонтали"), getCoordinate("вертикали"));
     }
 
