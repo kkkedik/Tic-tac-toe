@@ -64,17 +64,44 @@ public class Computer implements Player {
         return null;
     }
 
+//    public Pair<Integer, Integer> getStep(Board board, char symbol) {
+//        Pair<Integer, Integer> pair;
+//
+//        for (int i = 0; i < 3; i++) {
+//            pair = checkColumnStep(board, i, symbol);
+//            if (pair != null) {
+//                return pair;
+//            }
+//        }
+//
+//        for (int i = 0; i < 3; i++) {
+//            pair = checkLineStep(board, i, symbol);
+//            if (pair != null) {
+//                return pair;
+//            }
+//        }
+//
+//        for (int i = 0; i < 2; i++) {
+//            pair = checkDiagonalStep(board, i, symbol);
+//            if (pair != null) {
+//                return pair;
+//            }
+//        }
+//        return null;
+//    }
+
     public Pair<Integer, Integer> getWinStep(Board board, int stepCount) {
 
         switch (stepCount) {
-            case 0:
+            case 0: {
                 if (board.isCellEmpty(1, 1)) {
                     return new ImmutablePair<>(1, 1);
                 } else {
                     return new ImmutablePair<>(0, 2);
                 }
                 break;
-            case 1:
+            }
+            case 1: {
                 if (board.isCellFilledWithChar(1, 1, 'X')) {
                     for (int i = 0; i < 3; i++) {
                         for (int j = 0; j < 3; j++) {
@@ -155,9 +182,137 @@ public class Computer implements Player {
                         if (x2 == 1 || y1 == 1) {
                             return new ImmutablePair<>(x1, y2);
                         }
-
                     }
                 }
+                break;
+            }
+            case 2: {
+                Pair<Integer, Integer> pair;
+                for (int i = 0; i < 3; i++) {
+                    pair = checkColumnStep(board, i, 'O');
+                    if (pair != null) {
+                        return pair;
+                    }
+                }
+
+                for (int i = 0; i < 3; i++) {
+                    pair = checkLineStep(board, i, 'O');
+                    if (pair != null) {
+                        return pair;
+                    }
+                }
+
+                for (int i = 0; i < 2; i++) {
+                    pair = checkDiagonalStep(board, i, 'O');
+                    if (pair != null) {
+                        return pair;
+                    }
+                }
+
+
+                for (int i = 0; i < 3; i++) {
+                    pair = checkColumnStep(board, i, 'X');
+                    if (pair != null) {
+                        return pair;
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    pair = checkLineStep(board, i, 'X');
+                    if (pair != null) {
+                        return pair;
+                    }
+                }
+
+                for (int i = 0; i < 2; i++) {
+                    pair = checkDiagonalStep(board, i, 'X');
+                    if (pair != null) {
+                        return pair;
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (board.isCellEmpty((2 + i) % 3, j)
+                                && board.isCellEmpty((1 + i) % 3, j)
+                                && board.isCellFilledWithChar(i, j, 'O')) {
+                            return new ImmutablePair<>((2 + i) % 3, j);
+                        }
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (board.isCellEmpty(i, (2 + j) % 3)
+                                && board.isCellEmpty(i, (1 + j) % 3)
+                                && board.isCellFilledWithChar(i, j, 'O')) {
+                            return new ImmutablePair<>(i, (2 + j) % 3);
+                        }
+                    }
+                }
+                if (board.isCellEmpty(0, 0)) {
+                    return new ImmutablePair<>(0, 0);
+                }
+                if (board.isCellEmpty(0, 2)) {
+                    return new ImmutablePair<>(0, 2);
+                }
+                if (board.isCellEmpty(2, 0)) {
+                    return new ImmutablePair<>(2, 0);
+                }
+                if (board.isCellEmpty(2, 2)) {
+                    return new ImmutablePair<>(2, 2);
+                }
+                break;
+            }
+            case 3: {
+                Pair<Integer, Integer> pair1;
+                for (int i = 0; i < 3; i++) {
+                    pair1 = checkColumnStep(board, i, 'O');
+                    if (pair1 != null) {
+                        return pair1;
+                    }
+                }
+
+                for (int i = 0; i < 3; i++) {
+                    pair1 = checkLineStep(board, i, 'O');
+                    if (pair1 != null) {
+                        return pair1;
+                    }
+                }
+
+                for (int i = 0; i < 2; i++) {
+                    pair1 = checkDiagonalStep(board, i, 'O');
+                    if (pair1 != null) {
+                        return pair1;
+                    }
+                }
+
+
+                for (int i = 0; i < 3; i++) {
+                    pair1 = checkColumnStep(board, i, 'X');
+                    if (pair1 != null) {
+                        return pair1;
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    pair1 = checkLineStep(board, i, 'X');
+                    if (pair1 != null) {
+                        return pair1;
+                    }
+                }
+
+                for (int i = 0; i < 2; i++) {
+                    pair1 = checkDiagonalStep(board, i, 'X');
+                    if (pair1 != null) {
+                        return pair1;
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (board.isCellEmpty(i, j)) {
+                            return new ImmutablePair<>(i, j);
+                        }
+                    }
+                }
+                break;
+            }
         }
 
 
@@ -228,6 +383,7 @@ public class Computer implements Player {
 //        }
 //
 //        return new ImmutablePair<>(1, 2);
+        return null;
     }
 
 
