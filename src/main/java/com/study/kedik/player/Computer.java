@@ -131,6 +131,15 @@ public class Computer implements Player {
                     if (pair != null) {
                         return pair;
                     }
+
+                    pair = checkColumns(board, 'X', List.of(0, 2));
+                    if (pair != null) {
+                        return pair;
+                    }
+                    pair = checkLines(board, 'X', List.of(0, 2));
+                    if (pair != null) {
+                        return pair;
+                    }
                     List<ImmutablePair<Integer, Integer>> xCoordinatesList = new ArrayList<>();
                     for (int i = 0; i < 3; i++) {
                         for (int j = 0; j < 3; j++) {
@@ -262,9 +271,9 @@ public class Computer implements Player {
                     return pair2;
                 }
 
-                if (is3StepWinCell(board, pair1, 'X')) {
-                    return pair1;
-                }
+//                if (is3StepWinCell(board, pair1, 'X')) {
+//                    return pair1;
+//                }
                 if (is3StepWinCell(board, pair2, 'X')) {
                     return pair2;
                 }
@@ -275,8 +284,8 @@ public class Computer implements Player {
     }
 
     private boolean is3StepWinCell(Board board, Pair<Integer, Integer> coords, char symbol) {
-        int x = coords.getLeft();
-        int y = coords.getRight();
+        int y = coords.getLeft();
+        int x = coords.getRight();
 
         boolean isWinLine = board.isCellFilledWithChar((x + 2) % 3, y, symbol) && board.isCellFilledWithChar((x + 1) % 3, y, symbol);
         boolean isWinColumn = board.isCellFilledWithChar(x, (y + 2) % 3, symbol) && board.isCellFilledWithChar(x, (y + 1) % 3, symbol);
