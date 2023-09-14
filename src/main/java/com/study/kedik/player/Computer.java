@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Computer implements Player {
 
@@ -64,31 +65,27 @@ public class Computer implements Player {
         return null;
     }
 
-//    public Pair<Integer, Integer> getStep(Board board, char symbol) {
-//        Pair<Integer, Integer> pair;
-//
-//        for (int i = 0; i < 3; i++) {
-//            pair = checkColumnStep(board, i, symbol);
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//
-//        for (int i = 0; i < 3; i++) {
-//            pair = checkLineStep(board, i, symbol);
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//
-//        for (int i = 0; i < 2; i++) {
-//            pair = checkDiagonalStep(board, i, symbol);
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//        return null;
-//    }
+    public Pair<Integer, Integer> checkColumns(Board board, char symbol, List<Integer> columnNumbers) {
+        Pair<Integer, Integer> pair;
+        for (Integer i : columnNumbers) {
+            pair = checkColumnStep(board, i, symbol);
+            if (pair != null) {
+                return pair;
+            }
+        }
+        return null;
+    }
+
+    public Pair<Integer, Integer> checkLines(Board board, char symbol, List<Integer> lineNumbers) {
+        Pair<Integer, Integer> pair;
+        for (Integer i : lineNumbers) {
+            pair = checkLineStep(board, i, symbol);
+            if (pair != null) {
+                return pair;
+            }
+        }
+        return null;
+    }
 
     public Pair<Integer, Integer> getWinStep(Board board, int stepCount) {
 
@@ -99,7 +96,6 @@ public class Computer implements Player {
                 } else {
                     return new ImmutablePair<>(0, 2);
                 }
-                break;
             }
             case 1: {
                 if (board.isCellFilledWithChar(1, 1, 'X')) {
@@ -127,19 +123,11 @@ public class Computer implements Player {
                     }
                 } else {
                     Pair<Integer, Integer> pair;
-                    pair = checkColumnStep(board, 0, 'X');
+                    pair = checkColumns(board, 'O', List.of(0, 2));
                     if (pair != null) {
                         return pair;
                     }
-                    pair = checkColumnStep(board, 2, 'X');
-                    if (pair != null) {
-                        return pair;
-                    }
-                    pair = checkLineStep(board, 0, 'X');
-                    if (pair != null) {
-                        return pair;
-                    }
-                    pair = checkLineStep(board, 2, 'X');
+                    pair = checkLines(board, 'O', List.of(0, 2));
                     if (pair != null) {
                         return pair;
                     }
@@ -188,204 +176,125 @@ public class Computer implements Player {
             }
             case 2: {
                 Pair<Integer, Integer> pair;
-                for (int i = 0; i < 3; i++) {
-                    pair = checkColumnStep(board, i, 'O');
-                    if (pair != null) {
-                        return pair;
-                    }
-                }
+                if (board.isCellFilledWithChar(1, 1, 'X')) {
 
-                for (int i = 0; i < 3; i++) {
-                    pair = checkLineStep(board, i, 'O');
+                    pair = checkColumns(board, 'O', List.of(0, 2));
                     if (pair != null) {
                         return pair;
                     }
-                }
+                    pair = checkLines(board, 'O', List.of(0, 2));
+                    if (pair != null) {
+                        return pair;
+                    }
 
-                for (int i = 0; i < 2; i++) {
-                    pair = checkDiagonalStep(board, i, 'O');
+                    pair = checkColumns(board, 'X', List.of(0, 1));
                     if (pair != null) {
                         return pair;
                     }
-                }
 
+                    pair = checkLines(board, 'X', List.of(1, 2));
+                    if (pair != null) {
+                        return pair;
+                    }
 
-                for (int i = 0; i < 3; i++) {
-                    pair = checkColumnStep(board, i, 'X');
+                    pair = checkDiagonalStep(board, 0, 'X');
                     if (pair != null) {
                         return pair;
                     }
-                }
-                for (int i = 0; i < 3; i++) {
-                    pair = checkLineStep(board, i, 'X');
-                    if (pair != null) {
-                        return pair;
-                    }
-                }
 
-                for (int i = 0; i < 2; i++) {
-                    pair = checkDiagonalStep(board, i, 'X');
+                } else {
+
+                    pair = checkColumnStep(board, 1, 'O');
                     if (pair != null) {
                         return pair;
                     }
-                }
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        if (board.isCellEmpty((2 + i) % 3, j)
-                                && board.isCellEmpty((1 + i) % 3, j)
-                                && board.isCellFilledWithChar(i, j, 'O')) {
-                            return new ImmutablePair<>((2 + i) % 3, j);
+                    pair = checkLineStep(board, 1, 'O');
+                    if (pair != null) {
+                        return pair;
+                    }
+
+                    for (int i = 0; i < 2; i++) {
+                        pair = checkDiagonalStep(board, i, 'O');
+                        if (pair != null) {
+                            return pair;
                         }
                     }
-                }
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        if (board.isCellEmpty(i, (2 + j) % 3)
-                                && board.isCellEmpty(i, (1 + j) % 3)
-                                && board.isCellFilledWithChar(i, j, 'O')) {
-                            return new ImmutablePair<>(i, (2 + j) % 3);
-                        }
+
+                    pair = checkColumns(board, 'X', List.of(0, 2));
+                    if (pair != null) {
+                        return pair;
                     }
-                }
-                if (board.isCellEmpty(0, 0)) {
-                    return new ImmutablePair<>(0, 0);
-                }
-                if (board.isCellEmpty(0, 2)) {
-                    return new ImmutablePair<>(0, 2);
-                }
-                if (board.isCellEmpty(2, 0)) {
-                    return new ImmutablePair<>(2, 0);
-                }
-                if (board.isCellEmpty(2, 2)) {
-                    return new ImmutablePair<>(2, 2);
+                    pair = checkLines(board, 'X', List.of(0, 2));
+                    if (pair != null) {
+                        return pair;
+                    }
+
+                    if (board.isCellEmpty(0, 1)
+                            && board.isCellEmpty(2, 1)) {
+                        return new ImmutablePair<>(0, 1);
+                    }
+                    if (board.isCellEmpty(1, 0)
+                            && board.isCellEmpty(1, 2)) {
+                        return new ImmutablePair<>(1, 0);
+                    }
                 }
                 break;
             }
             case 3: {
-                Pair<Integer, Integer> pair1;
-                for (int i = 0; i < 3; i++) {
-                    pair1 = checkColumnStep(board, i, 'O');
-                    if (pair1 != null) {
-                        return pair1;
-                    }
-                }
-
-                for (int i = 0; i < 3; i++) {
-                    pair1 = checkLineStep(board, i, 'O');
-                    if (pair1 != null) {
-                        return pair1;
-                    }
-                }
-
-                for (int i = 0; i < 2; i++) {
-                    pair1 = checkDiagonalStep(board, i, 'O');
-                    if (pair1 != null) {
-                        return pair1;
-                    }
-                }
-
-
-                for (int i = 0; i < 3; i++) {
-                    pair1 = checkColumnStep(board, i, 'X');
-                    if (pair1 != null) {
-                        return pair1;
-                    }
-                }
-                for (int i = 0; i < 3; i++) {
-                    pair1 = checkLineStep(board, i, 'X');
-                    if (pair1 != null) {
-                        return pair1;
-                    }
-                }
-
-                for (int i = 0; i < 2; i++) {
-                    pair1 = checkDiagonalStep(board, i, 'X');
-                    if (pair1 != null) {
-                        return pair1;
-                    }
-                }
+                List<ImmutablePair<Integer, Integer>> emptyCoordinatesList = new ArrayList<>();
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
+                        if (i == 1 && j == 1) {
+                            continue;
+                        }
                         if (board.isCellEmpty(i, j)) {
-                            return new ImmutablePair<>(i, j);
+                            emptyCoordinatesList.add(new ImmutablePair<>(i, j));
                         }
                     }
                 }
-                break;
+                Pair<Integer, Integer> pair1 = emptyCoordinatesList.get(0);
+                Pair<Integer, Integer> pair2 = emptyCoordinatesList.get(1);
+
+                if (is3StepWinCell(board, pair1, 'O')) {
+                    return pair1;
+                }
+                if (is3StepWinCell(board, pair2, 'O')) {
+                    return pair2;
+                }
+
+                if (is3StepWinCell(board, pair1, 'X')) {
+                    return pair1;
+                }
+                if (is3StepWinCell(board, pair2, 'X')) {
+                    return pair2;
+                }
+                return pair1;
             }
         }
-
-
-//        Pair<Integer, Integer> pair;
-//        for (int i = 0; i < 3; i++) {
-//            pair = checkColumnStep(board, i, 'O');
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//
-//        for (int i = 0; i < 3; i++) {
-//            pair = checkLineStep(board, i, 'O');
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//
-//        for (int i = 0; i < 2; i++) {
-//            pair = checkDiagonalStep(board, i, 'O');
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//        //Х
-//
-//        for (int i = 0; i < 3; i++) {
-//            pair = checkColumnStep(board, i, 'X');
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//        for (int i = 0; i < 3; i++) {
-//            pair = checkLineStep(board, i, 'X');
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//
-//        for (int i = 0; i < 2; i++) {
-//            pair = checkDiagonalStep(board, i, 'X');
-//            if (pair != null) {
-//                return pair;
-//            }
-//        }
-//
-//
-//        if (board.isCellEmpty(0, 1)) {
-//            return new ImmutablePair<>(0, 1);
-//        }
-//        if (board.isCellEmpty(0, 2)) {
-//            return new ImmutablePair<>(0, 2);
-//        }
-//        if (board.isCellEmpty(2, 2)) {
-//            return new ImmutablePair<>(2, 2);
-//        }
-//        if (board.isCellEmpty(1, 2)) {
-//            return new ImmutablePair<>(1, 2);
-//        }
-//        if (board.isCellEmpty(2, 1)) {
-//            return new ImmutablePair<>(2, 2);
-//        }
-//        if (board.isCellEmpty(0, 0)) {
-//            return new ImmutablePair<>(0, 0);
-//        }
-//        if (board.isCellEmpty(1, 0)) {
-//            return new ImmutablePair<>(1, 0);
-//        }
-//
-//        return new ImmutablePair<>(1, 2);
         return null;
     }
 
+    private boolean is3StepWinCell(Board board, Pair<Integer, Integer> coords, char symbol) {
+        int x = coords.getLeft();
+        int y = coords.getRight();
+
+        boolean isWinLine = board.isCellFilledWithChar((x + 2) % 3, y, symbol) && board.isCellFilledWithChar((x + 1) % 3, y, symbol);
+        boolean isWinColumn = board.isCellFilledWithChar(x, (y + 2) % 3, symbol) && board.isCellFilledWithChar(x, (y + 1) % 3, symbol);
+        boolean isCorner = Set.of(0, 2).contains(x) && Set.of(0, 2).contains(y);
+
+        boolean isWinFirstDiagonal = isCorner && x == y && board.isCellFilledWithChar((x + 2) % 3, (y + 2) % 3, symbol) &&
+                board.isCellFilledWithChar((x + 1) % 3, (y + 1) % 3, symbol);
+
+        boolean isWinSecondDiagonal = isCorner && x != y && board.isCellFilledWithChar((2 * (x + 1)) % 3, (2 * (y + 1)) % 3, symbol) &&
+                board.isCellFilledWithChar((2 * (x + 1)) % 3, (2 * (y + 1)) % 3, symbol);
+
+        boolean isWinCentralCell = x == 1 && y == 1 && board.isCellFilledWithChar(0, 0, symbol) && board.isCellFilledWithChar(2, 2, symbol) ||
+                board.isCellFilledWithChar(2, 0, symbol) && board.isCellFilledWithChar(0, 2, symbol);
+
+        boolean isWinDiagonal = isWinFirstDiagonal || isWinSecondDiagonal || isWinCentralCell;
+
+        return isWinLine || isWinColumn || isWinDiagonal;
+    }
 
     @Override
     public char getSymbol() {
