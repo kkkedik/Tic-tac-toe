@@ -271,9 +271,9 @@ public class Computer implements Player {
                     return pair2;
                 }
 
-//                if (is3StepWinCell(board, pair1, 'X')) {
-//                    return pair1;
-//                }
+                if (is3StepWinCell(board, pair1, 'X')) {
+                    return pair1;
+                }
                 if (is3StepWinCell(board, pair2, 'X')) {
                     return pair2;
                 }
@@ -284,9 +284,8 @@ public class Computer implements Player {
     }
 
     private boolean is3StepWinCell(Board board, Pair<Integer, Integer> coords, char symbol) {
-        int y = coords.getLeft();
-        int x = coords.getRight();
-
+        int x = coords.getLeft();
+        int y = coords.getRight();
         boolean isWinLine = board.isCellFilledWithChar((x + 2) % 3, y, symbol) && board.isCellFilledWithChar((x + 1) % 3, y, symbol);
         boolean isWinColumn = board.isCellFilledWithChar(x, (y + 2) % 3, symbol) && board.isCellFilledWithChar(x, (y + 1) % 3, symbol);
         boolean isCorner = Set.of(0, 2).contains(x) && Set.of(0, 2).contains(y);
@@ -294,8 +293,9 @@ public class Computer implements Player {
         boolean isWinFirstDiagonal = isCorner && x == y && board.isCellFilledWithChar((x + 2) % 3, (y + 2) % 3, symbol) &&
                 board.isCellFilledWithChar((x + 1) % 3, (y + 1) % 3, symbol);
 
-        boolean isWinSecondDiagonal = isCorner && x != y && board.isCellFilledWithChar((2 * (x + 1)) % 3, (2 * (y + 1)) % 3, symbol) &&
-                board.isCellFilledWithChar((2 * (x + 1)) % 3, (2 * (y + 1)) % 3, symbol);
+//        boolean isWinSecondDiagonal = isCorner && x != y && board.isCellFilledWithChar((2 * (x + 1)) % 3, (2 * (y + 1)) % 3, symbol) &&
+//                board.isCellFilledWithChar((2 * (x + 1)) % 3, (2 * (y + 1)) % 3, symbol);
+        boolean isWinSecondDiagonal = isCorner && x != y && board.isCellFilledWithChar(2, 0, symbol) && board.isCellFilledWithChar(0, 2, symbol);
 
         boolean isWinCentralCell = x == 1 && y == 1 && board.isCellFilledWithChar(0, 0, symbol) && board.isCellFilledWithChar(2, 2, symbol) ||
                 board.isCellFilledWithChar(2, 0, symbol) && board.isCellFilledWithChar(0, 2, symbol);
