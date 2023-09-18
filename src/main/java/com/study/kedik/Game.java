@@ -9,6 +9,7 @@ public class Game {
     public Board board;
     Player firstPlayer;
     Player secondPlayer;
+    private int stepCount;
 
     public Game(Player firstPlayer, Player secondPlayer) {
         this.firstPlayer = firstPlayer;
@@ -22,7 +23,7 @@ public class Game {
         int y;
         boolean condition;
         do {
-            Pair<Integer, Integer> coordinates = player.getNextStep(board);
+            Pair<Integer, Integer> coordinates = player.getNextStep(board, stepCount);
             x = coordinates.getLeft();
             y = coordinates.getRight();
             clearConsole();
@@ -48,7 +49,9 @@ public class Game {
 
     public void play() {
         board.printBoard();
-        while (makeStep(firstPlayer) && makeStep(secondPlayer));
+        while (makeStep(firstPlayer) && makeStep(secondPlayer)){
+            stepCount++;
+        }
     }
 
     public static void clearConsole() {

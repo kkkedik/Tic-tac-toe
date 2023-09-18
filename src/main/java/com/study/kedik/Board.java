@@ -6,7 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Arrays;
 
 public class Board {
-    public char[][] board;
+    private char[][] board;
 
     public Board() {
         this.board = new char[3][3];
