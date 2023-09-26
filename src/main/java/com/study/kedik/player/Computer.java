@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class Computer implements Player {
@@ -86,18 +87,6 @@ public class Computer implements Player {
         }
         return null;
     }
-    public Pair<Integer, Integer> checkColumnsAndLinesStep(Board board, char symbol, List<Integer> columnNumbers1, List<Integer> columnNumbers2) {
-        Pair<Integer, Integer> pair;
-        pair = checkColumns(board, symbol, columnNumbers1);
-        if (pair != null) {
-            return pair;
-        }
-        pair = checkLines(board, symbol, columnNumbers2);
-        if (pair != null) {
-            return pair;
-        }
-        return null;
-    }
 
     public Pair<Integer, Integer> firstComputerStep(Board board) {
         if (board.isCellEmpty(1, 1)) {
@@ -133,15 +122,25 @@ public class Computer implements Player {
                 }
             }
         } else {
-            pair = checkColumnsAndLinesStep(board,'O',List.of(0, 2),List.of(0, 2));
+            //Optional<Pair> pair1 = pair.
+            pair = checkColumns(board, 'O', List.of(0, 2));
+            if (pair != null) {
+                return pair;
+            }
+            pair = checkLines(board, 'O', List.of(0, 2));
             if (pair != null) {
                 return pair;
             }
 
-            pair = checkColumnsAndLinesStep(board,'X',List.of(0, 2),List.of(0, 2));
+            pair = checkColumns(board, 'X', List.of(0, 2));
             if (pair != null) {
                 return pair;
             }
+            pair = checkLines(board, 'X', List.of(0, 2));
+            if (pair != null) {
+                return pair;
+            }
+
 
             List<ImmutablePair<Integer, Integer>> xCoordinatesList = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
@@ -193,12 +192,20 @@ public class Computer implements Player {
         Pair<Integer, Integer> pair;
         if (board.isCellFilledWithChar(1, 1, 'X')) {
 
-
-            pair = checkColumnsAndLinesStep(board,'O',List.of(0, 2),List.of(0, 2));
+            pair = checkColumns(board, 'O', List.of(0, 2));
             if (pair != null) {
                 return pair;
             }
-            pair = checkColumnsAndLinesStep(board,'X',List.of(0, 1),List.of(1, 2));
+            pair = checkLines(board, 'O', List.of(0, 2));
+            if (pair != null) {
+                return pair;
+            }
+
+            pair = checkColumns(board, 'X', List.of(0, 1));
+            if (pair != null) {
+                return pair;
+            }
+            pair = checkLines(board, 'X', List.of(1, 2));
             if (pair != null) {
                 return pair;
             }
@@ -226,7 +233,11 @@ public class Computer implements Player {
                 }
             }
 
-            pair = checkColumnsAndLinesStep(board,'X',List.of(0, 2),List.of(0, 2));
+            pair = checkColumns(board, 'X', List.of(0, 2));
+            if (pair != null) {
+                return pair;
+            }
+            pair = checkLines(board, 'X', List.of(0, 2));
             if (pair != null) {
                 return pair;
             }
