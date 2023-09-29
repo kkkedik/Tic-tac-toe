@@ -187,8 +187,8 @@ public class ComputerStepHelper {
         if (board.isCellFilledWithChar(1, 1, 'X')) {
             if (checkColumns(board, 'O', List.of(0, 2))) return;
             if (checkLines(board, 'O', List.of(0, 2))) return;
-            if (checkColumns(board, 'X', List.of(0, 1))) return;
-            if (checkLines(board, 'X', List.of(1, 2))) return;
+            if (checkColumns(board, 'X', List.of(1, 2))) return;
+            if (checkLines(board, 'X', List.of(0, 1))) return;
             if (checkDiagonalStep(board, 0, 'X'))return;
         } else {
             if (checkColumnStep(board, 1, 'O')) return;
@@ -229,6 +229,8 @@ public class ComputerStepHelper {
             step = pair2;
             return;
         }
+        step = pair1;
+        return;
     }
 
 
