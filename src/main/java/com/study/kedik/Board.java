@@ -6,12 +6,15 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Arrays;
 
 public class Board {
+
+    public static final char EMPTY_CHAR = '*';
+
     private char[][] board;
 
     public Board() {
         this.board = new char[3][3];
         for (char[] strings : board) {
-            Arrays.fill(strings, '*');
+            Arrays.fill(strings, EMPTY_CHAR);
         }
     }
 
@@ -61,20 +64,21 @@ public class Board {
 
         for (int i = 0; i < 3 && !containsEmptyCells; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j] == '*') {
+                if (board[i][j] == EMPTY_CHAR) {
                     containsEmptyCells = true;
                     break;
                 }
             }
         }
         if (containsEmptyCells) return GameStatus.IN_GAME;
+        System.out.println(GameStatus.DRAW.message);
         App.mainMenu();
         return GameStatus.DRAW;
     }
 
 
     public boolean isCellEmpty(int x, int y) {
-        return board[y][x] == '*';
+        return board[y][x] == EMPTY_CHAR;
     }
 
     public boolean isCellFilledWithChar(int x, int y, char c) {
