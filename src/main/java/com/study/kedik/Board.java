@@ -68,7 +68,6 @@ public class Board {
             }
         }
         if (containsEmptyCells) return GameStatus.IN_GAME;
-        System.out.println(GameStatus.DRAW.message);
         return GameStatus.DRAW;
     }
 

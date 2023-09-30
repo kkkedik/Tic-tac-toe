@@ -39,7 +39,7 @@ public class Game {
     public boolean checkGameStatus() {
         GameStatus gameStatus = board.getGameStatus();
         if (!gameStatus.equals(GameStatus.IN_GAME)) {
-//            System.out.println(gameStatus.message);
+            System.out.println(gameStatus.message);
             return false;
         }
         return true;
