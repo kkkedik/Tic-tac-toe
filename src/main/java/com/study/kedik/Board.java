@@ -1,8 +1,5 @@
 package com.study.kedik;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.Arrays;
 
 public class Board {
@@ -72,7 +69,6 @@ public class Board {
         }
         if (containsEmptyCells) return GameStatus.IN_GAME;
         System.out.println(GameStatus.DRAW.message);
-        App.mainMenu();
         return GameStatus.DRAW;
     }
 

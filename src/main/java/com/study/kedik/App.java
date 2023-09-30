@@ -2,6 +2,7 @@ package com.study.kedik;
 
 
 import com.study.kedik.player.Computer;
+import com.study.kedik.player.ComputerStepHelper;
 import com.study.kedik.player.Human;
 import com.study.kedik.player.Player;
 import com.study.kedik.utils.IOUtils;
@@ -38,7 +39,8 @@ public class App {
     public static void startPveGame() {
 
         Player player = new Human('X');
-        Player computer = new Computer();
+        ComputerStepHelper computerStepHelper = new ComputerStepHelper();
+        Player computer = new Computer(computerStepHelper);
         Game pveGame = new Game(player, computer);
         pveGame.play();
 

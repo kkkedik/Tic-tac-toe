@@ -3,7 +3,6 @@ package com.study.kedik;
 import com.study.kedik.player.Player;
 import org.apache.commons.lang3.tuple.Pair;
 
-
 public class Game {
 
     public Board board;
