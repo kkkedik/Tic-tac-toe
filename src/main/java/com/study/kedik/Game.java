@@ -3,7 +3,6 @@ package com.study.kedik;
 import com.study.kedik.player.Player;
 import org.apache.commons.lang3.tuple.Pair;
 
-
 public class Game {
 
     public Board board;
@@ -40,7 +39,7 @@ public class Game {
     public boolean checkGameStatus() {
         GameStatus gameStatus = board.getGameStatus();
         if (!gameStatus.equals(GameStatus.IN_GAME)) {
-            System.out.println(gameStatus.message);
+//            System.out.println(gameStatus.message);
             return false;
         }
         return true;
